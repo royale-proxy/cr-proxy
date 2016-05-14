@@ -9,7 +9,7 @@ if __name__ == "__main__":
 
     definitions = CoCMessageDefinitions.read()
 
-    client_endpoint = CoCClientEndpoint(reactor, "gamea.clashofclans.com", 9339)
+    client_endpoint = CoCClientEndpoint(reactor, "game.clashroyaleapp.com", 9339)
 
     server_endpoint = CoCServerEndpoint(reactor, 9339)
     server_endpoint.listen(CoCServerFactory(client_endpoint, definitions))
