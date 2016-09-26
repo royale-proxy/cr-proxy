@@ -27,9 +27,9 @@ class CoCServerCrypto(CoCCrypto):
         messageid = int.from_bytes(packet[:2], byteorder="big")
         unknown = int.from_bytes(packet[5:7], byteorder="big")
         payload = packet[7:]
-        if messageid == 10100:
+        if messageid == 10100: # ClientHandshake
             return messageid, unknown, payload
-        elif messageid == 10101:
+        elif messageid == 10101: # Login
             self.clientkey = payload[:32]
             self.beforenm(self.clientkey)
             nonce = CoCNonce(clientkey=self.clientkey, serverkey=self.serverkey)

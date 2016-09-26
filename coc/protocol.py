@@ -1,5 +1,6 @@
 from twisted.internet import protocol
-
+import traceback
+from coc.hexdump import hexdump
 
 class CoCPacketReceiver(protocol.Protocol):
 
@@ -58,7 +59,8 @@ class CoCProtocol(CoCPacketReceiver):
             decoded = self.decoder.decode(messageid, unknown, payload)
         except (KeyError, IndexError, NotImplementedError) as e:
             print(messageid, "Error:", e)
-            print(messageid, (messageid.to_bytes(2, byteorder="big") + len(payload).to_bytes(3, byteorder="big") + unknown.to_bytes(2, byteorder="big") + payload).hex())
+            print(messageid, "payload length: {} unknown: {}".format(len(payload), unknown))
+            print(hexdump(messageid.to_bytes(2, byteorder="big") + len(payload).to_bytes(3, byteorder="big") + unknown.to_bytes(2, byteorder="big") + payload))
         else:
             self.decoder.dump(decoded)
 

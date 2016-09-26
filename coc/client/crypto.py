@@ -7,7 +7,7 @@ class CoCClientCrypto(CoCCrypto):
     def __init__(self, factory):
         self._factory = factory
         self.keypair()
-        self._serverkey = PublicKey(bytes.fromhex("ba105f0d3a099414d154046f41d80cf122b49902eab03b78a912f3c66dba2c39"))
+        self._serverkey = PublicKey(bytes.fromhex("bbdba8653396d1df84efaea923ecd150d15eb526a46a6c39b53dac974fff3829"))
         self.beforenm(self.serverkey)
 
     @property
@@ -22,7 +22,7 @@ class CoCClientCrypto(CoCCrypto):
         messageid = int.from_bytes(packet[:2], byteorder="big")
         unknown = int.from_bytes(packet[5:7], byteorder="big")
         payload = packet[7:]
-        if messageid == 20100 or (messageid == 20103 and not self.session_key):
+        if messageid == 20100 or (messageid == 20103 and not self.session_key): # ServerHandshake or LoginFailed
             if messageid == 20100:
                 self.session_key = self.server.session_key = packet[-24:]
             return messageid, unknown, payload
