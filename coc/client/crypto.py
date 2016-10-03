@@ -26,7 +26,7 @@ class CoCClientCrypto(CoCCrypto):
             if messageid == 20100:
                 self.session_key = self.server.session_key = packet[-24:]
             return messageid, unknown, payload
-        elif messageid in {20103, 20104}:
+        elif messageid in {20103, 20104}: # LoginFailed or LoginOk
             nonce = CoCNonce(nonce=self.encrypt_nonce, clientkey=self.clientkey, serverkey=self.serverkey)
             ciphertext = payload
             try:

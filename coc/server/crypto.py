@@ -1,7 +1,7 @@
 from nacl.public import PrivateKey, PublicKey
 from nacl.exceptions import CryptoError
 from coc.crypto import CoCCrypto, CoCNonce
-
+from coc.hexdump import hexdump
 
 class CoCServerCrypto(CoCCrypto):
 
@@ -42,6 +42,8 @@ class CoCServerCrypto(CoCCrypto):
                 return False
             else:
                 self.decrypt_nonce = self.client.encrypt_nonce = message[24:48]
+                print("Client nonce")
+                print(hexdump(message[24:48]))
                 return messageid, unknown, message[48:]
         else:
             ciphertext = payload
