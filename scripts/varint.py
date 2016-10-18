@@ -109,6 +109,7 @@ def hexToDecimal(hexStr):
     print ("sint32={}".format(sint32))
     rrsint32 = (((rrn) >> 1) ^ (-((rrn) & 1)))
     print ("rrsint32={}".format(rrsint32))
+    print ("int32 bin={}".format(bin(n)))
     
 def printHelp():
     print("""
