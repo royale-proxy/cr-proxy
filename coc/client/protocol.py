@@ -15,9 +15,9 @@ class CoCClientProtocol(CoCClientCrypto, CoCProtocol):
         super(CoCClientProtocol, self).connectionMade()
         print("connected to {}:{} ...".format(self.peer.host, self.peer.port))
 
-    def packetDecrypted(self, messageid, unknown, payload):
-        self.decodePacket(messageid, unknown, payload)
-        self.server.sendPacket(messageid, unknown, payload)
+    def packetDecrypted(self, messageid, version, payload):
+        self.decodePacket(messageid, version, payload)
+        self.server.sendPacket(messageid, version, payload)
 
     def connectionLost(self, reason):
         print("connection to {}:{} closed ...".format(self.peer.host, self.peer.port))

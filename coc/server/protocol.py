@@ -19,12 +19,12 @@ class CoCServerProtocol(CoCServerCrypto, CoCProtocol):
         print("connection from {}:{} ...".format(self.peer.host, self.peer.port))
         self.factory.client_endpoint.connect(CoCClientFactory(self))
 
-    def packetDecrypted(self, messageid, unknown, payload):
+    def packetDecrypted(self, messageid, version, payload):
         if not self.client:
-            reactor.callLater(0.25, self.packetDecrypted, messageid, unknown, payload)
+            reactor.callLater(0.25, self.packetDecrypted, messageid, version, payload)
             return
-        self.decodePacket(messageid, unknown, payload)
-        self.client.sendPacket(messageid, unknown, payload)
+        self.decodePacket(messageid, version, payload)
+        self.client.sendPacket(messageid, version, payload)
 
     def connectionLost(self, reason):
         print("connection from {}:{} closed ...".format(self.peer.host, self.peer.port))

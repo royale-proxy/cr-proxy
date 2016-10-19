@@ -4,3 +4,4 @@
 .pydevproject
 *.iml
 *.swp
+*.json

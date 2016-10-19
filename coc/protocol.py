@@ -1,6 +1,9 @@
 from twisted.internet import protocol
 import traceback
+import os
 from coc.hexdump import hexdump
+from coc.proxyconfig import ProxyConfig
+from coc.replay import Replay
 
 class CoCPacketReceiver(protocol.Protocol):
 
@@ -30,7 +33,6 @@ class CoCPacketReceiver(protocol.Protocol):
 class CoCProtocol(CoCPacketReceiver):
 
     _peer = None
-
     factory = None
     server = None
     client = None
@@ -52,6 +54,7 @@ class CoCProtocol(CoCPacketReceiver):
     def packetReceived(self, packet):
         decrypted = self.decryptPacket(packet)
         if decrypted:
+            Replay.save(*decrypted)
             self.packetDecrypted(*decrypted)
 
     def decodePacket(self, messageid, version, payload):
@@ -70,7 +73,7 @@ class CoCProtocol(CoCPacketReceiver):
     def decryptPacket(self, packet):
         raise NotImplementedError
 
-    def packetDecrypted(self, messageid, unknown, payload):
+    def packetDecrypted(self, messageid, version, payload):
         raise NotImplementedError
 
     def sendPacket(self, messageid, unknown, payload):

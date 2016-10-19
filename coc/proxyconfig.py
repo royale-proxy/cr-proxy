@@ -11,8 +11,11 @@ class ProxyConfig:
         
     @staticmethod
     def start(config_file):
-        with open(config_file, 'r') as fh:
-            ProxyConfig.config = json.load(fh)
+        if os.path.exists(config_file):
+            with open(config_file, 'r') as fh:
+                ProxyConfig.config = json.load(fh)
+        else:
+            raise FileNotFoundError("Define a config.json file")
         
     @staticmethod
     def get_replay_directory():

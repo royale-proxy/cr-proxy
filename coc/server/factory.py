@@ -5,7 +5,6 @@ from coc.message.decoder import CoCMessageDecoder
 
 
 class CoCServerFactory(Factory):
-
     def __init__(self, client_endpoint, definitions):
         self.client_endpoint = client_endpoint
         self.encoder = CoCMessageEncoder(definitions)
