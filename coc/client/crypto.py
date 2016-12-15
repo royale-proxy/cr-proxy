@@ -7,7 +7,7 @@ class CoCClientCrypto(CoCCrypto):
     def __init__(self, factory):
         self._factory = factory
         self.keypair()
-        self._serverkey = PublicKey(bytes.fromhex("e330c7916ae0a66f3a90eae97a863ee00ac1dcad058877b1eecfc8fe91c93532"))
+        self._serverkey = PublicKey(bytes.fromhex("0f9fff6d583023c5c739c053581c994dbe37789900ffda312fc97edfd091945f"))
         self.beforenm(self.serverkey)
 
     @property
