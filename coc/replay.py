@@ -5,8 +5,8 @@ from coc.proxyconfig import ProxyConfig
 
 class Replay:
     message_index_file = "message.index"
-    message_index = 1    
-        
+    message_index = 1
+
     def __init__(self):
         Replay.start()
 
@@ -15,7 +15,7 @@ class Replay:
         if ProxyConfig.get_replay_directory() and not os.path.exists(ProxyConfig.get_replay_directory()):
             os.makedirs(ProxyConfig.get_replay_directory())
         Replay.read_message_index()
-        
+
     @staticmethod
     def read_message_index():
         if not ProxyConfig.get_replay_directory():
@@ -35,20 +35,21 @@ class Replay:
             return
         target = open("{}/{}".format(ProxyConfig.get_replay_directory(), Replay.message_index_file), 'w')
         target.write(str(Replay.message_index))
-    
+        target.close()
+
     @staticmethod
     def get_next_message_index():
         current = Replay.message_index
         Replay.message_index += 1
         return current
-    
+
     @staticmethod
     def save(messageid, version, payload):
         if not ProxyConfig.get_replay_directory():
             return
         if not os.path.exists(ProxyConfig.get_replay_directory()):
             os.makedirs(ProxyConfig.get_replay_directory())
-            
+
         target = open("{}/{}-{}.{}".format(ProxyConfig.get_replay_directory(), str(Replay.get_next_message_index()).zfill(4), str(messageid), "bin"), "wb")
         target.write(messageid.to_bytes(2, byteorder="big"))
         target.write(len(payload).to_bytes(3, byteorder="big"))
@@ -56,8 +57,8 @@ class Replay:
         target.write(payload)
         target.close()
         Replay.save_message_index()
-    
-    @staticmethod    
+
+    @staticmethod
     def read(message_index):
         if not ProxyConfig.get_replay_directory():
             return
@@ -65,16 +66,8 @@ class Replay:
         files = glob(glob_string)
         if len(files) != 1:
             return
-        
+
         file_path = files[0]
         with open(file_path, 'rb') as fh:
             message = fh.read()
         return message
-            
-            
-            
-            
-            
-            
-            
-            
